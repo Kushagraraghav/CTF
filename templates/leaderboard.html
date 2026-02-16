@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard - CTF Integrity System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1><i class="fas fa-trophy"></i> Leaderboard</h1>
+        <p>Top performers in the CTF competition</p>
+    </div>
+
+    <div class="leaderboard-container">
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Total Points</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in board %}
+                <tr class="{{ 'rank-1' if loop.index == 1 else ('rank-2' if loop.index == 2 else ('rank-3' if loop.index == 3 else '')) }}">
+                    <td class="rank">
+                        {% if loop.index == 1 %}
+                            <i class="fas fa-crown gold"></i> #1
+                        {% elif loop.index == 2 %}
+                            <i class="fas fa-medal silver"></i> #2
+                        {% elif loop.index == 3 %}
+                            <i class="fas fa-medal bronze"></i> #3
+                        {% else %}
+                            #{{ loop.index }}
+                        {% endif %}
+                    </td>
+                    <td class="username">
+                        <i class="fas fa-user-circle"></i> {{ player[0] }}
+                    </td>
+                    <td class="points">
+                        <i class="fas fa-star"></i> {{ player[1] }}
+                    </td>
+                    <td>
+                        <span class="status-badge verified">
+                            <i class="fas fa-check-circle"></i> Verified
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

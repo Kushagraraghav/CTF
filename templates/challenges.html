@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Challenges - CTF Integrity System{% endblock %}
+
+{% block extra_css %}
+<style>
+.monitoring-alert {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="monitoring-alert">
+        <i class="fas fa-eye"></i>
+        <div>
+            <strong>Active Monitoring Enabled</strong>
+            <p style="margin: 5px 0 0 0; font-size: 14px;">Your activity is being tracked for competition integrity. Tab switching, copy-paste, and rapid solving are monitored.</p>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h1><i class="fas fa-flag-checkered"></i> CTF Challenges</h1>
+        <p>Solve challenges to earn points and climb the leaderboard</p>
+    </div>
+
+    {% if result %}
+    <div class="alert {{ 'alert-success' if 'Correct' in result else 'alert-error' }}">
+        <i class="fas {{ 'fa-check-circle' if 'Correct' in result else 'fa-times-circle' }}"></i>
+        {{ result }}
+    </div>
+    {% endif %}
+
+    <div class="challenges-grid">
+        {% for challenge in challenges %}
+        <div class="challenge-card difficulty-{{ challenge[3]|lower }}">
+            <div class="challenge-header">
+                <h3>{{ challenge[1] }}</h3>
+                <span class="difficulty-badge {{ challenge[3]|lower }}">{{ challenge[3] }}</span>
+            </div>
+            
+            <p class="challenge-description">{{ challenge[2] }}</p>
+            
+            <div class="challenge-footer">
+                <div class="points">
+                    <i class="fas fa-star"></i> {{ challenge[5] }} points
+                </div>
+                
+                <form method="POST" class="flag-form" onsubmit="return validateFlag(event)">
+                    <input type="hidden" name="challenge_id" value="{{ challenge[0] }}">
+                    <div class="flag-input-group">
+                        <input type="text" name="flag" placeholder="flag{...}" required class="flag-input">
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/monitoring.js') }}"></script>
+<script>
+function validateFlag(event) {
+    const input = event.target.querySelector('input[name="flag"]');
+    if (!input.value.startsWith('flag{') || !input.value.endsWith('}')) {
+        alert('Flag must be in format: flag{...}');
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}

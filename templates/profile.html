@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - CTF Integrity System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+        <p>Your CTF competition statistics</p>
+    </div>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <i class="fas fa-user-astronaut"></i>
+            </div>
+            <h2>{{ full_name }}</h2>
+            <p class="profile-rank">Rank #{{ rank }}</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ total_score }}</h3>
+                    <p>Total Points</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ solved }}</h3>
+                    <p>Challenges Solved</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>#{{ rank }}</h3>
+                    <p>Current Rank</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Verified</h3>
+                    <p>Account Status</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="/challenges" class="btn btn-primary">
+                <i class="fas fa-flag"></i> Continue Challenges
+            </a>
+            <a href="/leaderboard" class="btn btn-secondary">
+                <i class="fas fa-trophy"></i> View Leaderboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
